@@ -1,0 +1,27 @@
+Joomla! CLI Installer
+=====================
+
+This is a simple script to install extensions from the command-line. This is 
+useful for installing extensions when your administrator is hosed because you
+just updated a system plugin that has proceeded to wipe out your site (*cough*)
+or if you want a mechanism for repeatedly testing your installer packages.
+
+If you are presently using phing, make or ant to automatically build packages
+and alternatively might be using those tools to automatically copy files across
+then this tool might present a better option for enabling you to repeat install
+extensions into a Joomla site.
+
+
+Usage
+=====
+
+The tool works with either directories or packages:
+php cli/install.php ~/Sites/workspace/ban_ip/plugin/
+
+Alternatively if you are running a Linux/Mac system and make install.php
+executable then you can do the following:
+
+cli/install.php ~/Sites/workspace/ban_ip/plugin/
+
+
+It should work with both extension directories and packaged files.

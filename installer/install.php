@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 /**
  * @package		Joomla.Cli
@@ -9,6 +10,11 @@
 // Make sure we're being called from the command line, not a web interface
 if (array_key_exists('REQUEST_METHOD', $_SERVER)) die();
 
+/**
+ * This is a CRON script which should be called from the command-line, not the
+ * web. For example something like:
+ * /usr/bin/php /path/to/site/cli/update_cron.php
+ */
 
 // Set flag that this is a parent file.
 define('_JEXEC', 1);
@@ -39,7 +45,8 @@ JError::$legacy = true;
 require_once JPATH_CONFIGURATION . '/configuration.php';
 
 /**
- * A quick script to install Joomla extensions from the command line.
+ * This script will fetch the update information for all extensions and store
+ * them in the database, speeding up your administrator.
  *
  * @package  Joomla.CLI
  * @since    2.5
@@ -64,7 +71,7 @@ class Install extends JApplicationCli
 		
 		if (count($this->input->args) != 1)
 		{
-			$this->out("Usage: {$this->executable} </path/to/install_folder_or_package>");
+			$this->out("Usage: {$this->input->executable} </path/to/install_folder_or_package>");
 			exit(1);
 		}
 		
@@ -76,7 +83,7 @@ class Install extends JApplicationCli
 			exit(1);
 		}
 		
-		
+		$cleanupDir = false;		
 		if (is_file($source))
 		{
 			// is a file!
@@ -89,6 +96,7 @@ class Install extends JApplicationCli
 				$this->out('Error: unable to extract package');
 				exit(1);
 			}
+			$cleanupDir = true;
 			$sourceDir = $package['dir'];
 		}
 		else
@@ -122,8 +130,12 @@ class Install extends JApplicationCli
 		{
 			$this->out("Installer Message: " . $installer->message);
 		}
-		
-		
+	
+		// clean up after ourselves	
+		if ($cleanupDir)
+		{
+			@rmdir($source);
+		}	
 	}
 }
 
