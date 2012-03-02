@@ -15,6 +15,9 @@ extensions into a Joomla site.
 Usage
 =====
 
+Download the "install.php" file and put it in the "cli" directory of your 
+Joomla! 2.5 install.
+
 The tool works with either directories or packages:
 php cli/install.php ~/Sites/workspace/ban_ip/plugin/
 
