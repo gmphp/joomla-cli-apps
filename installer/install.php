@@ -104,9 +104,9 @@ class Install extends JApplicationCli
 			$this->out("Installing from directory: $source");
 			$sourceDir = $source;
 		}
-		
+
 		$installer = JInstaller::getInstance();
-		$result = $installer->install($source);
+		$result = $installer->install($sourceDir);
 		
 		if ($result)
 		{
@@ -134,7 +134,7 @@ class Install extends JApplicationCli
 		// clean up after ourselves	
 		if ($cleanupDir)
 		{
-			@rmdir($source);
+			JFolder::delete($sourceDir);
 		}	
 	}
 }
